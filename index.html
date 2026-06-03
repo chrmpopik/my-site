@@ -1,0 +1,659 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Christina | UX Designer</title>
+	<meta name="description" content="Personal website for Christina, a UX designer with a bright, expressive visual style.">
+	<style>
+		:root {
+			--bg: #f7f4ee;
+			--ink: #13202d;
+			--muted: #5b6670;
+			--card: rgba(255, 255, 255, 0.7);
+			--line: rgba(19, 32, 45, 0.12);
+			--pink: #ff4fd8;
+			--yellow: #ffd447;
+			--cyan: #2ed6ff;
+			--green: #38e18b;
+			--orange: #ff8a3d;
+			--shadow: 0 25px 60px rgba(19, 32, 45, 0.14);
+		}
+
+		* {
+			box-sizing: border-box;
+		}
+
+		html {
+			scroll-behavior: smooth;
+		}
+
+		body {
+			margin: 0;
+			color: var(--ink);
+			background:
+				radial-gradient(circle at top left, rgba(255, 79, 216, 0.22), transparent 28%),
+				radial-gradient(circle at top right, rgba(46, 214, 255, 0.24), transparent 24%),
+				radial-gradient(circle at bottom left, rgba(56, 225, 139, 0.18), transparent 30%),
+				linear-gradient(180deg, #fffaf1 0%, #f7f4ee 50%, #f4efe7 100%);
+			font-family: Georgia, "Times New Roman", serif;
+			line-height: 1.5;
+			min-height: 100vh;
+		}
+
+		body::before {
+			content: "";
+			position: fixed;
+			inset: 0;
+			pointer-events: none;
+			background-image:
+				linear-gradient(rgba(19, 32, 45, 0.025) 1px, transparent 1px),
+				linear-gradient(90deg, rgba(19, 32, 45, 0.025) 1px, transparent 1px);
+			background-size: 34px 34px;
+			mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.35), transparent 90%);
+		}
+
+		.page {
+			width: min(1120px, calc(100% - 32px));
+			margin: 0 auto;
+			padding: 28px 0 48px;
+			position: relative;
+			z-index: 1;
+		}
+
+		.topbar {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			gap: 18px;
+			padding: 10px 0 24px;
+		}
+
+		.brand {
+			display: inline-flex;
+			align-items: center;
+			gap: 12px;
+			text-decoration: none;
+			color: inherit;
+		}
+
+		.mark {
+			width: 44px;
+			height: 44px;
+			border-radius: 14px;
+			background: conic-gradient(from 220deg, var(--pink), var(--yellow), var(--cyan), var(--green), var(--pink));
+			box-shadow: 0 12px 24px rgba(255, 79, 216, 0.22);
+			position: relative;
+			flex: 0 0 auto;
+		}
+
+		.mark::after {
+			content: "C";
+			position: absolute;
+			inset: 50% auto auto 50%;
+			transform: translate(-50%, -52%);
+			font-family: Arial, Helvetica, sans-serif;
+			font-size: 1rem;
+			font-weight: 800;
+			color: #0f1821;
+		}
+
+		.brand strong {
+			display: block;
+			font-family: Arial, Helvetica, sans-serif;
+			letter-spacing: 0.08em;
+			text-transform: uppercase;
+			font-size: 0.78rem;
+		}
+
+		.brand span {
+			display: block;
+			font-family: Arial, Helvetica, sans-serif;
+			color: var(--muted);
+			font-size: 0.92rem;
+		}
+
+		nav {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: flex-end;
+			gap: 10px;
+			font-family: Arial, Helvetica, sans-serif;
+			font-size: 0.95rem;
+		}
+
+		nav a {
+			text-decoration: none;
+			color: var(--ink);
+			padding: 10px 14px;
+			border: 1px solid transparent;
+			border-radius: 999px;
+			transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
+		}
+
+		nav a:hover {
+			transform: translateY(-1px);
+			background: rgba(255, 255, 255, 0.5);
+			border-color: var(--line);
+		}
+
+		.hero {
+			position: relative;
+			overflow: hidden;
+			border: 1px solid rgba(255, 255, 255, 0.68);
+			border-radius: 34px;
+			background: linear-gradient(135deg, rgba(255, 255, 255, 0.84), rgba(255, 255, 255, 0.6));
+			box-shadow: var(--shadow);
+			padding: clamp(28px, 4vw, 56px);
+			display: grid;
+			gap: 28px;
+			grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
+			align-items: center;
+		}
+
+		.hero::before,
+		.hero::after {
+			content: "";
+			position: absolute;
+			border-radius: 999px;
+			filter: blur(0);
+			opacity: 0.8;
+			animation: float 10s ease-in-out infinite;
+		}
+
+		.hero::before {
+			width: 260px;
+			height: 260px;
+			right: -80px;
+			top: -90px;
+			background: radial-gradient(circle at 30% 30%, rgba(46, 214, 255, 0.9), rgba(46, 214, 255, 0.08) 68%);
+		}
+
+		.hero::after {
+			width: 180px;
+			height: 180px;
+			right: 140px;
+			bottom: -64px;
+			background: radial-gradient(circle at 30% 30%, rgba(255, 79, 216, 0.84), rgba(255, 79, 216, 0.08) 68%);
+			animation-delay: -3s;
+		}
+
+		.eyebrow {
+			font-family: Arial, Helvetica, sans-serif;
+			text-transform: uppercase;
+			letter-spacing: 0.18em;
+			font-size: 0.76rem;
+			color: var(--muted);
+			margin: 0 0 14px;
+		}
+
+		h1 {
+			margin: 0;
+			font-size: clamp(3rem, 8vw, 6.2rem);
+			line-height: 0.95;
+			letter-spacing: -0.06em;
+			max-width: 9ch;
+		}
+
+		.name-flair {
+			display: inline-block;
+			background: linear-gradient(90deg, var(--pink), var(--orange), var(--yellow));
+			-webkit-background-clip: text;
+			background-clip: text;
+			color: transparent;
+		}
+
+		.intro {
+			max-width: 62ch;
+			margin: 20px 0 0;
+			font-family: Arial, Helvetica, sans-serif;
+			font-size: 1.08rem;
+			color: var(--muted);
+		}
+
+		.actions {
+			margin-top: 28px;
+			display: flex;
+			flex-wrap: wrap;
+			gap: 14px;
+		}
+
+		.button {
+			display: inline-flex;
+			align-items: center;
+			gap: 10px;
+			text-decoration: none;
+			padding: 14px 20px;
+			border-radius: 999px;
+			font-family: Arial, Helvetica, sans-serif;
+			font-weight: 700;
+			transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
+		}
+
+		.button:hover {
+			transform: translateY(-2px);
+			box-shadow: 0 12px 24px rgba(19, 32, 45, 0.12);
+		}
+
+		.button.primary {
+			color: #0f1821;
+			background: linear-gradient(135deg, var(--yellow), #ffdca6);
+		}
+
+		.button.secondary {
+			color: var(--ink);
+			background: rgba(255, 255, 255, 0.62);
+			border: 1px solid var(--line);
+		}
+
+		.hero-panel {
+			position: relative;
+			z-index: 1;
+			display: grid;
+			gap: 16px;
+		}
+
+		.stats {
+			display: grid;
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+			gap: 14px;
+		}
+
+		.stat {
+			padding: 18px;
+			border-radius: 22px;
+			background: rgba(255, 255, 255, 0.74);
+			border: 1px solid rgba(19, 32, 45, 0.08);
+			min-height: 124px;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+		}
+
+		.stat strong {
+			font-family: Arial, Helvetica, sans-serif;
+			font-size: 2rem;
+			line-height: 1;
+		}
+
+		.stat span {
+			font-family: Arial, Helvetica, sans-serif;
+			color: var(--muted);
+			font-size: 0.95rem;
+		}
+
+		.stat:nth-child(1) strong {
+			color: var(--pink);
+		}
+
+		.stat:nth-child(2) strong {
+			color: var(--cyan);
+		}
+
+		.stat:nth-child(3) strong {
+			color: var(--orange);
+		}
+
+		.stat:nth-child(4) strong {
+			color: var(--green);
+		}
+
+		.note {
+			border-radius: 24px;
+			background: linear-gradient(135deg, rgba(255, 79, 216, 0.12), rgba(46, 214, 255, 0.15));
+			border: 1px solid rgba(19, 32, 45, 0.08);
+			padding: 18px 20px;
+			font-family: Arial, Helvetica, sans-serif;
+			color: var(--ink);
+		}
+
+		.note strong {
+			display: block;
+			margin-bottom: 6px;
+			font-size: 1rem;
+		}
+
+		.section {
+			margin-top: 28px;
+			padding: 28px;
+			border-radius: 30px;
+			background: rgba(255, 255, 255, 0.6);
+			border: 1px solid rgba(255, 255, 255, 0.66);
+			box-shadow: 0 12px 30px rgba(19, 32, 45, 0.06);
+		}
+
+		.section-header {
+			display: flex;
+			justify-content: space-between;
+			gap: 18px;
+			align-items: end;
+			margin-bottom: 20px;
+		}
+
+		.section-header h2 {
+			margin: 0;
+			font-size: clamp(1.7rem, 4vw, 2.6rem);
+			line-height: 1;
+			letter-spacing: -0.04em;
+		}
+
+		.section-header p {
+			margin: 0;
+			max-width: 48ch;
+			font-family: Arial, Helvetica, sans-serif;
+			color: var(--muted);
+		}
+
+		.grid {
+			display: grid;
+			gap: 18px;
+		}
+
+		.grid.three {
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+		}
+
+		.card {
+			position: relative;
+			overflow: hidden;
+			padding: 22px;
+			border-radius: 26px;
+			background: var(--card);
+			border: 1px solid rgba(19, 32, 45, 0.08);
+			min-height: 100%;
+		}
+
+		.card::after {
+			content: "";
+			position: absolute;
+			inset: auto -30px -30px auto;
+			width: 120px;
+			height: 120px;
+			border-radius: 50%;
+			opacity: 0.14;
+			background: currentColor;
+		}
+
+		.card h3 {
+			margin: 0 0 10px;
+			font-family: Arial, Helvetica, sans-serif;
+			font-size: 1.16rem;
+		}
+
+		.card p {
+			margin: 0;
+			font-family: Arial, Helvetica, sans-serif;
+			color: var(--muted);
+		}
+
+		.card.work-1 { color: var(--pink); }
+		.card.work-2 { color: var(--cyan); }
+		.card.work-3 { color: var(--green); }
+
+		.chips {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 10px;
+			margin-top: 16px;
+		}
+
+		.chip {
+			font-family: Arial, Helvetica, sans-serif;
+			font-size: 0.9rem;
+			padding: 8px 12px;
+			border-radius: 999px;
+			background: rgba(255, 255, 255, 0.78);
+			border: 1px solid var(--line);
+		}
+
+		.about {
+			display: grid;
+			grid-template-columns: minmax(0, 1fr) minmax(280px, 0.88fr);
+			gap: 18px;
+			align-items: start;
+		}
+
+		.quote {
+			padding: 26px;
+			border-radius: 26px;
+			background: linear-gradient(135deg, rgba(255, 212, 71, 0.55), rgba(255, 138, 61, 0.45));
+			color: #0f1821;
+			box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+		}
+
+		.quote p {
+			margin: 0;
+			font-size: 1.1rem;
+			font-family: Arial, Helvetica, sans-serif;
+		}
+
+		.contact {
+			display: flex;
+			justify-content: space-between;
+			gap: 18px;
+			align-items: center;
+			flex-wrap: wrap;
+		}
+
+		.contact a {
+			color: var(--ink);
+			font-family: Arial, Helvetica, sans-serif;
+			text-decoration-thickness: 2px;
+			text-underline-offset: 0.18em;
+		}
+
+		footer {
+			padding: 26px 0 0;
+			font-family: Arial, Helvetica, sans-serif;
+			color: var(--muted);
+			text-align: center;
+		}
+
+		@keyframes float {
+			0%, 100% { transform: translateY(0) rotate(0deg); }
+			50% { transform: translateY(10px) rotate(4deg); }
+		}
+
+		@media (max-width: 900px) {
+			.hero,
+			.about,
+			.grid.three {
+				grid-template-columns: 1fr;
+			}
+
+			.topbar,
+			.section-header,
+			.contact {
+				align-items: flex-start;
+				flex-direction: column;
+			}
+
+			nav {
+				justify-content: flex-start;
+			}
+		}
+
+		@media (max-width: 620px) {
+			.page {
+				width: min(100% - 18px, 1120px);
+				padding-top: 12px;
+			}
+
+			.hero,
+			.section {
+				padding: 22px;
+				border-radius: 24px;
+			}
+
+			.stats {
+				grid-template-columns: 1fr;
+			}
+
+			h1 {
+				max-width: 100%;
+			}
+		}
+	</style>
+</head>
+<body>
+	<main class="page">
+		<header class="topbar">
+			<a class="brand" href="#home" aria-label="Christina home">
+				<div class="mark" aria-hidden="true"></div>
+				<div>
+					<strong>Christina</strong>
+					<span>UX designer</span>
+				</div>
+			</a>
+
+			<nav aria-label="Primary">
+				<a href="#about">About</a>
+				<a href="#work">Work</a>
+				<a href="#approach">Approach</a>
+				<a href="#contact">Contact</a>
+			</nav>
+		</header>
+
+		<section class="hero" id="home">
+			<div>
+				<p class="eyebrow">Bright systems. Thoughtful journeys.</p>
+				<h1>Hi, I’m <span class="name-flair">Christina</span>.</h1>
+				<p class="intro">
+					I’m a UX designer shaping clear, useful, and memorable digital experiences.
+					I like clean structure, lively color, and interfaces that feel warm enough to explore.
+				</p>
+				<div class="actions">
+					<a class="button primary" href="#work">See selected work</a>
+					<a class="button secondary" href="#contact">Let’s talk</a>
+				</div>
+			</div>
+
+			<div class="hero-panel" aria-label="Highlights">
+				<div class="stats">
+					<div class="stat">
+						<strong>08+</strong>
+						<span>Years designing products, systems, and stories</span>
+					</div>
+					<div class="stat">
+						<strong>UI</strong>
+						<span>Interfaces that balance clarity with personality</span>
+					</div>
+					<div class="stat">
+						<strong>UX</strong>
+						<span>Research, flows, wireframes, and testing</span>
+					</div>
+					<div class="stat">
+						<strong>+01</strong>
+						<span>Bright point of view in every project</span>
+					</div>
+				</div>
+
+				<div class="note">
+					<strong>Currently:</strong>
+					Designing polished digital experiences with bold accents, generous spacing, and a little spark.
+				</div>
+			</div>
+		</section>
+
+		<section class="section about" id="about">
+			<div>
+				<div class="section-header">
+					<div>
+						<p class="eyebrow">About</p>
+						<h2>Designing with clarity and color.</h2>
+					</div>
+				</div>
+				<p class="intro" style="margin-top: 0;">
+					I help teams turn complex problems into intuitive experiences. My process starts with listening,
+					mapping, and simplifying, then ends with details that make a product feel alive.
+				</p>
+				<div class="chips" aria-label="Skills">
+					<span class="chip">User research</span>
+					<span class="chip">Information architecture</span>
+					<span class="chip">Wireframing</span>
+					<span class="chip">Visual design</span>
+					<span class="chip">Design systems</span>
+					<span class="chip">Prototyping</span>
+				</div>
+			</div>
+
+			<aside class="quote">
+				<p>
+					“My favorite work lives at the intersection of structure and joy: layouts that are easy to use,
+					with enough personality to be remembered.”
+				</p>
+			</aside>
+		</section>
+
+		<section class="section" id="work">
+			<div class="section-header">
+				<div>
+					<p class="eyebrow">Selected work</p>
+					<h2>Small snapshots of how I think.</h2>
+				</div>
+				<p>
+					A few example directions that show how I approach UX problems with crisp hierarchy and bright, human-centered design.
+				</p>
+			</div>
+
+			<div class="grid three">
+				<article class="card work-1">
+					<h3>City guide app</h3>
+					<p>A friendly mobile experience for exploring neighborhoods, events, and recommendations with fast, visual browsing.</p>
+				</article>
+				<article class="card work-2">
+					<h3>Brand refresh</h3>
+					<p>Reframing a legacy product with a tighter design system, brighter palette, and more confident interaction patterns.</p>
+				</article>
+				<article class="card work-3">
+					<h3>Service dashboard</h3>
+					<p>Turning dense operational information into a calm workspace that supports decisions without visual noise.</p>
+				</article>
+			</div>
+		</section>
+
+		<section class="section" id="approach">
+			<div class="section-header">
+				<div>
+					<p class="eyebrow">Approach</p>
+					<h2>Make it simple. Make it vivid.</h2>
+				</div>
+			</div>
+
+			<div class="grid three">
+				<div class="card">
+					<h3>1. Listen</h3>
+					<p>I start by understanding the people, goals, and constraints so the solution is grounded in reality.</p>
+				</div>
+				<div class="card">
+					<h3>2. Shape</h3>
+					<p>I turn complexity into clear flows, readable hierarchy, and elegant interaction patterns.</p>
+				</div>
+				<div class="card">
+					<h3>3. Polish</h3>
+					<p>I finish with color, motion, and spacing choices that give the experience its distinct personality.</p>
+				</div>
+			</div>
+		</section>
+
+		<section class="section" id="contact">
+			<div class="contact">
+				<div>
+					<p class="eyebrow">Contact</p>
+					<h2 style="margin: 0; font-size: clamp(1.8rem, 5vw, 3rem); letter-spacing: -0.05em;">Want to build something beautiful?</h2>
+				</div>
+				<div>
+					<p class="intro" style="margin: 0 0 12px; max-width: 32ch;">
+						Reach out for freelance, product, or creative collaboration.
+					</p>
+					<a href="mailto:christina@example.com">christina@example.com</a>
+				</div>
+			</div>
+		</section>
+
+		<footer>
+			Made with bright colors and a lot of intention.
+		</footer>
+	</main>
+</body>
+</html>
