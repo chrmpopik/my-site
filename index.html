@@ -313,6 +313,55 @@
 			font-size: 1rem;
 		}
 
+		.weather-card {
+			border-radius: 24px;
+			background: linear-gradient(140deg, rgba(46, 214, 255, 0.2), rgba(255, 79, 216, 0.18), rgba(255, 212, 71, 0.2));
+			border: 1px solid rgba(19, 32, 45, 0.1);
+			padding: 18px 20px;
+			font-family: Arial, Helvetica, sans-serif;
+			backdrop-filter: blur(4px);
+		}
+
+		.weather-kicker {
+			margin: 0;
+			text-transform: uppercase;
+			letter-spacing: 0.13em;
+			font-size: 0.72rem;
+			font-weight: 700;
+			color: rgba(19, 32, 45, 0.72);
+		}
+
+		.weather-main {
+			display: flex;
+			align-items: center;
+			gap: 12px;
+			margin-top: 10px;
+		}
+
+		.weather-emoji {
+			font-size: 2rem;
+			line-height: 1;
+		}
+
+		.weather-temp {
+			margin: 0;
+			font-size: 1.9rem;
+			font-weight: 700;
+			line-height: 1;
+		}
+
+		.weather-desc {
+			margin: 4px 0 0;
+			font-size: 0.94rem;
+			color: rgba(19, 32, 45, 0.8);
+		}
+
+		.weather-meta {
+			margin: 10px 0 0;
+			font-size: 0.82rem;
+			color: rgba(19, 32, 45, 0.72);
+		}
+
 		.section {
 			margin-top: 28px;
 			padding: 28px;
@@ -552,6 +601,18 @@
 					<strong>Currently:</strong>
 					Designing polished digital experiences with bold accents, generous spacing, and a little spark.
 				</div>
+
+				<div class="weather-card" aria-live="polite" aria-label="Current local weather">
+					<p class="weather-kicker">Local weather</p>
+					<div class="weather-main">
+						<span class="weather-emoji" id="weather-emoji" aria-hidden="true">⏳</span>
+						<div>
+							<p class="weather-temp" id="weather-temp">Loading...</p>
+							<p class="weather-desc" id="weather-desc">Checking your location</p>
+						</div>
+					</div>
+					<p class="weather-meta" id="weather-meta">Powered by Open-Meteo</p>
+				</div>
 			</div>
 		</section>
 
@@ -655,5 +716,66 @@
 			Made with bright colors and a lot of intention.
 		</footer>
 	</main>
+
+	<script>
+		(function () {
+			var weatherEmoji = document.getElementById("weather-emoji");
+			var weatherTemp = document.getElementById("weather-temp");
+			var weatherDesc = document.getElementById("weather-desc");
+			var weatherMeta = document.getElementById("weather-meta");
+
+			function weatherPresentation(code) {
+				if (code === 0) return { emoji: "☀️", label: "Clear sky" };
+				if (code >= 1 && code <= 3) return { emoji: "☁️", label: "Cloudy" };
+				if (code === 45 || code === 48) return { emoji: "🌫️", label: "Fog" };
+				if ((code >= 51 && code <= 57) || (code >= 80 && code <= 82)) return { emoji: "🌧️", label: "Rain" };
+				if ((code >= 61 && code <= 67)) return { emoji: "🌧️", label: "Rain" };
+				if ((code >= 71 && code <= 77) || code === 85 || code === 86) return { emoji: "❄️", label: "Snow" };
+				if (code >= 95 && code <= 99) return { emoji: "⛈️", label: "Thunderstorm" };
+				return { emoji: "🌤️", label: "Mild" };
+			}
+
+			function setWeatherState(emoji, tempText, descText, metaText) {
+				weatherEmoji.textContent = emoji;
+				weatherTemp.textContent = tempText;
+				weatherDesc.textContent = descText;
+				weatherMeta.textContent = metaText;
+			}
+
+			if (!navigator.geolocation) {
+				setWeatherState("📍", "Location unavailable", "Geolocation is not supported by this browser", "Weather unavailable");
+				return;
+			}
+
+			navigator.geolocation.getCurrentPosition(function (position) {
+				var lat = position.coords.latitude;
+				var lon = position.coords.longitude;
+				var endpoint = "https://api.open-meteo.com/v1/forecast?latitude=" + encodeURIComponent(lat) + "&longitude=" + encodeURIComponent(lon) + "&current=temperature_2m,weather_code&temperature_unit=fahrenheit&timezone=auto";
+
+				fetch(endpoint)
+					.then(function (response) {
+						if (!response.ok) {
+							throw new Error("Weather request failed");
+						}
+						return response.json();
+					})
+					.then(function (data) {
+						if (!data || !data.current) {
+							throw new Error("No weather data returned");
+						}
+
+						var temperature = Math.round(data.current.temperature_2m);
+						var code = data.current.weather_code;
+						var details = weatherPresentation(code);
+						setWeatherState(details.emoji, temperature + "°F", details.label, "Based on your current location");
+					})
+					.catch(function () {
+						setWeatherState("⚠️", "Weather unavailable", "Could not load forecast right now", "Please try again in a moment");
+					});
+			}, function () {
+				setWeatherState("📍", "Location needed", "Enable location to see your weather.", "Open-Meteo forecast requires coordinates");
+			});
+		})();
+	</script>
 </body>
 </html>
